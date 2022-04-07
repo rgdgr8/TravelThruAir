@@ -18,7 +18,7 @@ public class FlightsDAO {
 	private static final String DAY = "dept_day";
 	private static final String HOUR = "dept_hour";
 	private static final String MINUTE = "dept_minute";
-	
+
 	public static final String DB_DRIVER = "DB_DRIVER";
 	public static final String DB_URL = "DB_URL";
 	public static final String DB_USER = "DB_USER";
@@ -29,20 +29,17 @@ public class FlightsDAO {
 	private final static List<Flight> offers = new ArrayList<Flight>();
 
 	private static FlightsDAO dao = null;
-	private Connection con;
 	private Statement stmt;
 
-	public static FlightsDAO newInstance(String driver, String url, String user, String pass) {
+	public static FlightsDAO newInstance(Connection con) {
 		if (dao == null) {
-			dao = new FlightsDAO(driver, url, user, pass);
+			dao = new FlightsDAO(con);
 		}
 		return dao;
 	}
 
-	private FlightsDAO(String driver, String url, String user, String pass) {
+	private FlightsDAO(Connection con) {
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, user, pass);
 			stmt = con.createStatement();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -128,7 +125,7 @@ public class FlightsDAO {
 					set.getInt(6), set.getInt(7));
 
 			int ind = offers.indexOf(t);
-			if (ind!=-1) {
+			if (ind != -1) {
 				t = offers.get(ind);
 			}
 			res.add(t);
@@ -151,7 +148,6 @@ public class FlightsDAO {
 	}
 
 	public void close() throws Exception {
-		con.close();
 		stmt.close();
 		dao = null;
 	}

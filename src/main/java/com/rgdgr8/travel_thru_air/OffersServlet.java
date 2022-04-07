@@ -1,6 +1,7 @@
 package com.rgdgr8.travel_thru_air;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -26,13 +27,10 @@ public class OffersServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		FlightsDAO dao = null;
-		String driver = getServletContext().getInitParameter(FlightsDAO.DB_DRIVER);
-		String url = getServletContext().getInitParameter(FlightsDAO.DB_URL);
-		String user = getServletContext().getInitParameter(FlightsDAO.DB_USER);
-		String pass = getServletContext().getInitParameter(FlightsDAO.DB_PASS);
+		Connection con = (Connection) getServletContext().getAttribute("con");
 		
 		try {
-			dao = FlightsDAO.newInstance(driver, url, user, pass);
+			dao = FlightsDAO.newInstance(con);
 			req.setAttribute("offers", dao.getOffers());
 			req.setAttribute("head", "<h1>Limited time offers (30% off)</h1>");
 			RequestDispatcher rd = req.getRequestDispatcher("home.jsp");

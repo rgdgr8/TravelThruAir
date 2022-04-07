@@ -1,6 +1,7 @@
 package com.rgdgr8.travel_thru_air;
 
 import java.io.IOException;
+import java.sql.Connection;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.annotation.WebServlet;
@@ -23,13 +24,10 @@ public class SearchServlet extends HttpServlet {
 		System.out.println(hour/* +":"+min */);
 
 		FlightsDAO dao = null;
-		String driver = getServletContext().getInitParameter(FlightsDAO.DB_DRIVER);
-		String url = getServletContext().getInitParameter(FlightsDAO.DB_URL);
-		String user = getServletContext().getInitParameter(FlightsDAO.DB_USER);
-		String pass = getServletContext().getInitParameter(FlightsDAO.DB_PASS);
+		Connection con = (Connection) getServletContext().getAttribute("con");
 		
 		try {
-			dao = FlightsDAO.newInstance(driver, url, user, pass);
+			dao = FlightsDAO.newInstance(con);
 			req.setAttribute("search", dao.search(date, hour, from, to));
 			if (hour == null || hour.equals(""))
 				hour = "all";

@@ -32,4 +32,8 @@
 		<param-name>DB_PASS</param-name>
 		<param-value>Lennon@1981</param-value>
 	</context-param>
+	
+	<listener>
+	<listener-class>com.rgdgr8.travel_thru_air.ConnectingListener</listener-class>
+	</listener>
 </web-app>
