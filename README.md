@@ -6,8 +6,10 @@ To implement a web application for “Travel Thru Air” using servlets to suppo
 
 OffersServlet has been used to display offers
 
+ConnectingListener used to load the jdbc driver and connect to the database.
+
 SearchServlet has been used to search for the required flights using the FlightsDAO
 
-FlightsDAO is a database access object that access a MySQL DB.
+FlightsDAO is a database access object that accesses the MySQL DB.
 
 home.jsp is the template page for home and search pages.
